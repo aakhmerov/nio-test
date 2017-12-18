@@ -8,10 +8,6 @@
   classpath:org/springframework/beans/factory/xml/spring-beans.xsd
   http://www.springframework.org/schema/context
   classpath:org/springframework/context/config/spring-context.xsd
-  http://www.springframework.org/schema/util
-  classpath:org/springframework/beans/factory/xml/spring-util.xsd
-  http://www.springframework.org/schema/tool
-  classpath:org/springframework/beans/factory/xml/spring-tool.xsd
   ">
 
   <context:annotation-config />
