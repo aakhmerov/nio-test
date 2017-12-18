@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  classpath:org/springframework/beans/factory/xml/spring-beans.xsd
+  http://www.springframework.org/schema/context
+  classpath:org/springframework/context/config/spring-context.xsd
+  http://www.springframework.org/schema/util
+  classpath:org/springframework/beans/factory/xml/spring-util.xsd
+  http://www.springframework.org/schema/tool
+  classpath:org/springframework/beans/factory/xml/spring-tool.xsd
+  ">
+
+  <context:annotation-config />
+  <context:component-scan base-package="com.aakhmerov.test.service"/>
+  <context:component-scan base-package="com.aakhmerov.test.jetty"/>
+
+  <bean id="configurationService" class="com.aakhmerov.test.service.ConfigurationService"/>
+
+  <bean id="fluxConfig" class="com.aakhmerov.test.flux.FluxConfig"/>
+
+</beans>
