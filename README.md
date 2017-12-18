@@ -26,11 +26,28 @@ mvn surefire:test -Dtest=ConnectionThreadsNumberTest
 
 ## Test results
 
-results are printed into console and are free for interpretation. SAmple results
+results are printed into console and are free for interpretation. Sample results:
 
 ```
-
+Running com.aakhmerov.test.ConnectionThreadsNumberTest
+Endpoint: [http://localhost:8090/api/status/async/threaded-connection] 
+ error count [0] 
+ avg duration [4739] ms
+Endpoint: [http://localhost:8090/api/status/async/unmanaged-threaded-connection] 
+ error count [0] 
+ avg duration [1958] ms
+Endpoint: [http://localhost:8090/api/status/async/connection] 
+ error count [0] 
+ avg duration [1168] ms
+Endpoint: [http://localhost:8090/flux/status/connection] 
+ error count [0] 
+ avg duration [5080] ms
+Endpoint: [http://localhost:8090/api/status/connection] 
+ error count [0] 
+ avg duration [3821] ms
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 69.072 sec
 ```
+
 
 ## Known issues
 
