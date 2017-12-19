@@ -8,7 +8,6 @@ import org.eclipse.jetty.servlets.GzipFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.http.server.reactive.HttpHandler;
@@ -107,7 +106,7 @@ public class SpringAwareServletConfiguration implements ApplicationContextAware 
   }
 
   @Override
-  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+  public void setApplicationContext(ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;
 
     ServletHolder fluxServlet = initFluxServlet();
