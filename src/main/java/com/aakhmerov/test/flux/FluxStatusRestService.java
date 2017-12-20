@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -19,13 +20,13 @@ public class FluxStatusRestService {
   private StatusCheckingService statusCheckingService;
 
   @GetMapping("/connection")
-  public Mono<ConnectionStatusDto> getConnectionStatus() {
+  public Flux<ConnectionStatusDto> getConnectionStatus() {
     ConnectionStatusDto result = statusCheckingService.getConnectionStatus();
-    return Mono.just(result);
+    return Flux.just(result);
   }
 
   @GetMapping("/threaded-connection")
-  public Mono<ConnectionStatusDto> getThreadedConnectionStatus() throws Exception {
+  public Flux<ConnectionStatusDto> getThreadedConnectionStatus() throws Exception {
     final ConnectionStatusDto[] result = new ConnectionStatusDto[1];
 
     Thread thread = new Thread(() -> {
@@ -34,6 +35,6 @@ public class FluxStatusRestService {
     thread.start();
     thread.join();
 
-    return Mono.just(result[0]);
+    return Flux.just(result[0]);
   }
 }

@@ -1,6 +1,8 @@
 package com.aakhmerov.test;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -10,6 +12,7 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.springframework.web.reactive.function.server.ServerRequest;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -103,6 +106,7 @@ public class ConnectionThreadsNumberTest {
       long start = System.currentTimeMillis();
 
       HttpGet httpGet = new HttpGet(endpoint);
+      httpGet.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
       CloseableHttpResponse response = null;
       try {
         response = httpclient.execute(httpGet);
