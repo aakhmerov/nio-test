@@ -38,6 +38,7 @@ public class ConnectionThreadsNumberTest {
   public static final String THREADED_ASYNC_ENDPOINT = "http://localhost:8090/api/status/async/threaded-connection";
   public static final String UNMANAGED_THREADED_ASYNC_ENDPOINT = "http://localhost:8090/api/status/async/unmanaged-threaded-connection";
   public static final String FLUX_ENDPOINT = "http://localhost:8090/flux/status/connection";
+  public static final String THREADED_FLUX_ENDPOINT = "http://localhost:8090/flux/status/threaded-connection";
   private AtomicInteger errorCount = new AtomicInteger(0);
 
   private String endpoint;
@@ -54,7 +55,8 @@ public class ConnectionThreadsNumberTest {
         SYNC_ENDPOINT,
         THREADED_ASYNC_ENDPOINT,
         UNMANAGED_THREADED_ASYNC_ENDPOINT,
-        FLUX_ENDPOINT
+        FLUX_ENDPOINT,
+        THREADED_FLUX_ENDPOINT
     });
     Collections.shuffle(list);
     return list;

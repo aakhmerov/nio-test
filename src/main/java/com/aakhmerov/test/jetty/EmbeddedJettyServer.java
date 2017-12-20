@@ -58,10 +58,6 @@ public class EmbeddedJettyServer {
     }
   }
 
-  public EmbeddedJettyServer(String contextLocation) {
-    jerseyServlet = new SpringAwareServletConfiguration(contextLocation);
-    jettyServer = setUpEmbeddedJetty(jerseyServlet);
-  }
 
   private Server setUpEmbeddedJetty(SpringAwareServletConfiguration jerseyServlet) {
     defineLogbackLoggingConfiguration();

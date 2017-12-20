@@ -23,4 +23,17 @@ public class FluxStatusRestService {
     ConnectionStatusDto result = statusCheckingService.getConnectionStatus();
     return Mono.just(result);
   }
+
+  @GetMapping("/threaded-connection")
+  public Mono<ConnectionStatusDto> getThreadedConnectionStatus() throws Exception {
+    final ConnectionStatusDto[] result = new ConnectionStatusDto[1];
+
+    Thread thread = new Thread(() -> {
+      result[0] = statusCheckingService.getConnectionStatus();
+    });
+    thread.start();
+    thread.join();
+
+    return Mono.just(result[0]);
+  }
 }
