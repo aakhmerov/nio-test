@@ -1,6 +1,7 @@
 package com.aakhmerov.test.flux;
 
 import com.aakhmerov.test.dto.ConnectionStatusDto;
+import com.aakhmerov.test.service.StatusCallable;
 import com.aakhmerov.test.service.StatusCheckingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,12 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * @author Askar Akhmerov
  */
 @RestController
 @RequestMapping(value = "/flux/status")
 public class FluxStatusRestService {
+  protected ExecutorService executor = Executors.newFixedThreadPool(10);
 
   @Autowired
   private StatusCheckingService statusCheckingService;
@@ -26,15 +31,11 @@ public class FluxStatusRestService {
   }
 
   @GetMapping("/threaded-connection")
-  public Flux<ConnectionStatusDto> getThreadedConnectionStatus() throws Exception {
-    final ConnectionStatusDto[] result = new ConnectionStatusDto[1];
+  public Mono<ConnectionStatusDto> getThreadedConnectionStatus() throws Exception {
 
-    Thread thread = new Thread(() -> {
-      result[0] = statusCheckingService.getConnectionStatus();
-    });
-    thread.start();
-    thread.join();
+    StatusCallable result = new StatusCallable(statusCheckingService);
+    executor.submit(result);
 
-    return Flux.just(result[0]);
+    return Mono.fromCallable(result);
   }
 }
