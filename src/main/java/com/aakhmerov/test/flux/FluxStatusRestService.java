@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,10 +21,16 @@ import java.util.concurrent.Executors;
 @RestController
 @RequestMapping(value = "/flux/status")
 public class FluxStatusRestService {
-  protected ExecutorService executor = Executors.newFixedThreadPool(10);
+
+  private StatusCheckingService statusCheckingService;
+  private Scheduler scheduler;
 
   @Autowired
-  private StatusCheckingService statusCheckingService;
+  public FluxStatusRestService(StatusCheckingService statusCheckingService) {
+    this.statusCheckingService = statusCheckingService;
+    this.scheduler = Schedulers.newParallel("sub", 400);
+    this.scheduler.start();
+  }
 
   @GetMapping("/connection")
   public Flux<ConnectionStatusDto> getConnectionStatus() {
@@ -32,10 +40,8 @@ public class FluxStatusRestService {
 
   @GetMapping("/threaded-connection")
   public Mono<ConnectionStatusDto> getThreadedConnectionStatus() throws Exception {
-
     StatusCallable result = new StatusCallable(statusCheckingService);
-    executor.submit(result);
 
-    return Mono.fromCallable(result);
+    return Mono.fromCallable(result).publishOn(this.scheduler);
   }
 }
