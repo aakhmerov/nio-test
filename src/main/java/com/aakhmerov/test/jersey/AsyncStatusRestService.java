@@ -26,7 +26,7 @@ public class AsyncStatusRestService {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.WILDCARD)
   @ManagedAsync
-  public void getConnectionStatus(@Suspended final AsyncResponse asyncResponse) {
+  public void getConnectionStatus(final AsyncResponse asyncResponse) {
     ConnectionStatusDto result = statusCheckingService.getConnectionStatus();
     asyncResponse.resume(result);
   }
@@ -36,7 +36,7 @@ public class AsyncStatusRestService {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.WILDCARD)
   @ManagedAsync
-  public void getThreadedConnectionStatus(@Suspended final AsyncResponse asyncResponse) {
+  public void getThreadedConnectionStatus(final AsyncResponse asyncResponse) {
     new Thread(() -> {
       ConnectionStatusDto result = statusCheckingService.getConnectionStatus();
       asyncResponse.resume(result);
